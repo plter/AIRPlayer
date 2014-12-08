@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
+        nativeDragEnter="nativeDragEnterHandler(event)" nativeDragDrop="nativeDragDropHandler(event)"
+        showStatusBar="false">
+    <fx:Script><![CDATA[
+
+        [Bindable]
+        private var songName:String;
+        private var sound:Sound;
+        private var channel:SoundChannel;
+
+        private function nativeDragEnterHandler(event:NativeDragEvent):void {
+            if (event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT)) {
+                var files:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
+
+                if (files.length >= 1) {
+                    var firstFile:File = files[0];
+                    if (firstFile.extension.toLowerCase() == "mp3") {
+                        NativeDragManager.acceptDragDrop(this);
+                    }
+                }
+            }
+        }
+
+        private function nativeDragDropHandler(event:NativeDragEvent):void {
+            var files:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
+            var firstFile:File = files[0];
+
+            songName = firstFile.name;
+
+            sound = new Sound(new URLRequest(firstFile.url));
+            channel = sound.play();
+        }
+        ]]></fx:Script>
+
+    <s:VGroup width="100%" height="100%">
+        <s:Label text="{songName}" width="100%"/>
+    </s:VGroup>
+</s:WindowedApplication>
