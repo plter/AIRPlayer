@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
-        nativeDragEnter="nativeDragEnterHandler(event)" nativeDragDrop="nativeDragDropHandler(event)"
-        showStatusBar="false">
-    <fx:Script><![CDATA[
+        nativeDragEnter="nativeDragEnterHandler(event)" nativeDragDrop="nativeDragDropHandler(event)" mouseDown="window_mouseDownHandler(event)"
+        showStatusBar="false" width="320" height="120" backgroundColor="white">
 
+    <fx:Script><![CDATA[
         [Bindable]
         private var songName:String;
         private var sound:Sound;
-        private var channel:SoundChannel;
+        private var channel:SoundChannel=null;
 
         private function nativeDragEnterHandler(event:NativeDragEvent):void {
             if (event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT)) {
@@ -28,12 +28,20 @@
 
             songName = firstFile.name;
 
+            if(channel!=null){
+                channel.stop();
+            }
             sound = new Sound(new URLRequest(firstFile.url));
             channel = sound.play();
+        }
+
+
+        private function window_mouseDownHandler(event:MouseEvent):void {
+            nativeWindow.startMove();
         }
         ]]></fx:Script>
 
     <s:VGroup width="100%" height="100%">
-        <s:Label text="{songName}" width="100%"/>
+        <s:Label text="{songName}" width="100%" textAlign="center"/>
     </s:VGroup>
 </s:WindowedApplication>
