@@ -7,7 +7,7 @@
           <sdk name="flex_sdk_4.6" />
         </dependencies>
         <compiler-options />
-        <packaging-air-desktop use-generated-descriptor="false" custom-descriptor-path="$MODULE_DIR$/Main-app.xml" package-file-name="AIRPlayer" />
+        <packaging-air-desktop custom-descriptor-path="$MODULE_DIR$/Main-app.xml" package-file-name="AIRPlayer" />
         <packaging-android />
         <packaging-ios />
       </configuration>

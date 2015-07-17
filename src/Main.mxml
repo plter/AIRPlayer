@@ -1,13 +1,17 @@
 <?xml version="1.0"?>
 <s:WindowedApplication xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark"
-        nativeDragEnter="nativeDragEnterHandler(event)" nativeDragDrop="nativeDragDropHandler(event)" mouseDown="window_mouseDownHandler(event)"
-        showStatusBar="false" width="320" height="120" backgroundColor="white">
+                       creationComplete="creationCompleteHandler(event)" closing="closingHandler(event)" nativeDragEnter="nativeDragEnterHandler(event)" nativeDragDrop="nativeDragDropHandler(event)"
+                       showStatusBar="false" title="{songName}" width="220" height="320" backgroundColor="white" alwaysInFront="true">
 
     <fx:Script><![CDATA[
+        import com.plter.airplayer.Player;
+        import com.plter.airplayer.Song;
+
+        import mx.events.FlexEvent;
+
         [Bindable]
         private var songName:String;
         private var sound:Sound;
-        private var channel:SoundChannel=null;
 
         private function nativeDragEnterHandler(event:NativeDragEvent):void {
             if (event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT)) {
@@ -23,25 +27,39 @@
         }
 
         private function nativeDragDropHandler(event:NativeDragEvent):void {
-            var files:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
-            var firstFile:File = files[0];
+            if (event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT)) {
+                var files:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
 
-            songName = firstFile.name;
+                var firstFile:File = files[0];
 
-            if(channel!=null){
-                channel.stop();
+                var song:Song = new Song(firstFile);
+                Player.getInstance().addSong(song);
+                songName = song.songName;
+                Player.getInstance().playLast();
             }
-            sound = new Sound(new URLRequest(firstFile.url));
-            channel = sound.play();
         }
 
+        private function songList_doubleClickHandler(event:MouseEvent):void {
+            if (songList.selectedItem) {
+                songName = songList.selectedItem.songName;
+                Player.getInstance().playAtIndex(songList.selectedIndex);
+            }
+        }
 
-        private function window_mouseDownHandler(event:MouseEvent):void {
-            nativeWindow.startMove();
+        private function closingHandler(event:Event):void {
+            Player.getInstance().savePlaylist();
+        }
+
+        private function creationCompleteHandler(event:FlexEvent):void {
+            Player.getInstance().readPlayList();
+            songName = songList.dataProvider[0].songName;
+            Player.getInstance().playAtIndex(0);
         }
         ]]></fx:Script>
 
     <s:VGroup width="100%" height="100%">
         <s:Label text="{songName}" width="100%" textAlign="center"/>
+
+        <s:List doubleClickEnabled="true" doubleClick="songList_doubleClickHandler(event)" width="100%" height="100%" id="songList" dataProvider="{Player.getInstance().songList}" labelField="songName"/>
     </s:VGroup>
 </s:WindowedApplication>
