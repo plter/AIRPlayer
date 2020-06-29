@@ -1,4 +1,3 @@
-AIRPlayer
-=========
+# AIRPlayer
 
-MP3 Player developed with Adobe AIR
+**说明：用于播放本地音乐**
