@@ -12,3 +12,5 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 globalThis.electron = require("electron");
 globalThis.path = require("path");
+globalThis.os = require("os");
+globalThis.fs = require("fs");

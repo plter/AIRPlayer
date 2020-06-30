@@ -1,5 +1,6 @@
 const Tpl = require("./MainView.html");
 import "./MainView.css"
+import Mediator from "../../../lib/puremvc/Mediator"
 
 const MainView = Vue.component("main-view", {
     template: Tpl,
@@ -9,10 +10,15 @@ const MainView = Vue.component("main-view", {
             output_text: ""
         };
     },
+
+    mounted() {
+
+    },
+
     methods: {
 
         scanLocalMediaFiles() {
-            this.scanning_local_media_files = true
+            this.scanning_local_media_files = true;
             this.output_text = "开始扫描...";
         },
 
@@ -28,6 +34,9 @@ const MainView = Vue.component("main-view", {
                     click() {
                         self.scanLocalMediaFiles();
                     }
+                }));
+                this._optionsMenu.append(new electron.remote.MenuItem({
+
                 }));
                 this._optionsMenu.append(new electron.remote.MenuItem({
                     label: "退出",

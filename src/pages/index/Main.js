@@ -1,7 +1,10 @@
-import MainView from "./controllers/MainView"
 import "./style.css"
+import Facade from "../../lib/puremvc/Facade"
+import Constants from "./Constants";
+import MainViewMediator from "./controllers/MainViewMediator";
+import MediaDirectoriesProxy from "./proxies/MediaDirectoriesProxy";
 
-let app = document.createElement("div");
-document.body.append(app);
-
-new MainView().$mount(app);
+let facade = Facade.getInstance("main");
+facade.registerMediator(new MainViewMediator());
+facade.registerProxy(new MediaDirectoriesProxy());
+facade.sendNotification(Constants.NOTIFICATIONS.START_UP);
