@@ -3,9 +3,21 @@ import "./MainView.css"
 
 const MainView = Vue.component("main-view", {
     template: Tpl,
+    data() {
+        return {
+            scanning_local_media_files: false,
+            output_text: ""
+        };
+    },
     methods: {
 
+        scanLocalMediaFiles() {
+            this.scanning_local_media_files = true
+            this.output_text = "开始扫描...";
+        },
+
         getOptionsMenu() {
+            let self = this;
             if (!this._optionsMenu) {
                 this._optionsMenu = this._optionsMenu || new electron.remote.Menu();
                 const appPath = electron.remote.app.getAppPath();
@@ -14,7 +26,7 @@ const MainView = Vue.component("main-view", {
                     label: "扫描本地音乐",
                     icon: path.join(appPath, "lib", "icons", "refresh.png"),
                     click() {
-                        alert("扫描本地音乐");
+                        self.scanLocalMediaFiles();
                     }
                 }));
                 this._optionsMenu.append(new electron.remote.MenuItem({

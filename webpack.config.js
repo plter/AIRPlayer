@@ -17,6 +17,6 @@ module.exports = {
         index: path.join(__dirname, "src", "pages", "index", "Main.js")
     },
     output: {
-        path: path.join(__dirname, "AIRPlayer")
+        path: path.join(__dirname, "AIRPlayer", "build_target")
     }
 };
