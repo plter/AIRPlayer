@@ -1,6 +1,15 @@
 const Constants = {
-    NOTIFICATIONS:{
-        START_UP:"startUp"
+    NOTIFICATIONS: {
+        START_UP: "startUp",
+        UPDATE_OUTPUT_TEXT: "updateOutputText",
+        UPDATE_PLAYLIST: "updatePlaylist",
+        PLAY_FIRST: "playFirst"
+    },
+
+    UpdatePlaylistType: {
+        ADD_ONE: "addOne",
+        ADD_MANY: "addMany",
+        REPLACE_MANY: "replaceMany"
     }
 };
 

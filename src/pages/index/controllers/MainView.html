@@ -4,11 +4,13 @@
     </div>
     <div class="buttons" v-if="!scanning_local_media_files">
         <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-sm btn-outline-light"><i class="fas fa-step-backward"></i></button>
-            <button type="button" class="btn btn-sm btn-outline-light"><i class="fas fa-play"></i></button>
-            <button type="button" class="btn btn-sm btn-outline-light"><i class="fas fa-step-forward"></i></button>
+            <button type="button" class="btn btn-sm btn-light"><i class="fas fa-step-backward"></i></button>
+            <button type="button" class="btn btn-sm btn-light"><i class="fas fa-play"></i></button>
+            <button type="button" class="btn btn-sm btn-light"><i class="fas fa-step-forward"></i></button>
         </div>
-        <button class="btn btn-sm btn-outline-light" style="margin-left: 0.3rem;" @click="menuClicked"><i
+        <button class="btn btn-sm btn-light" style="margin-left: 0.3rem;" @click="menuClicked"><i
                 class="fas fa-bars"></i></button>
     </div>
+
+    <audio autoplay ref="player" style="display: none;"></audio>
 </div>

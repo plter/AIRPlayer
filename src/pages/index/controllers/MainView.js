@@ -1,13 +1,14 @@
-const Tpl = require("./MainView.html");
 import "./MainView.css"
-import Mediator from "../../../lib/puremvc/Mediator"
+
+const Tpl = require("./MainView.html");
 
 const MainView = Vue.component("main-view", {
     template: Tpl,
     data() {
         return {
             scanning_local_media_files: false,
-            output_text: ""
+            output_text: "",
+            playlist: []
         };
     },
 
@@ -17,9 +18,8 @@ const MainView = Vue.component("main-view", {
 
     methods: {
 
-        scanLocalMediaFiles() {
-            this.scanning_local_media_files = true;
-            this.output_text = "开始扫描...";
+        addMediaFileToPlaylist(filepath) {
+            this.playlist.push(filepath);
         },
 
         getOptionsMenu() {
@@ -29,14 +29,21 @@ const MainView = Vue.component("main-view", {
                 const appPath = electron.remote.app.getAppPath();
 
                 this._optionsMenu.append(new electron.remote.MenuItem({
-                    label: "扫描本地音乐",
-                    icon: path.join(appPath, "lib", "icons", "refresh.png"),
+                    label: "播放列表",
+                    icon: path.join(appPath, "lib", "icons", "playlist.png"),
                     click() {
-                        self.scanLocalMediaFiles();
+                        // TODO
                     }
                 }));
                 this._optionsMenu.append(new electron.remote.MenuItem({
-
+                    label: "扫描本地音乐",
+                    icon: path.join(appPath, "lib", "icons", "refresh.png"),
+                    click() {
+                        // TODO
+                    }
+                }));
+                this._optionsMenu.append(new electron.remote.MenuItem({
+                    type: "separator"
                 }));
                 this._optionsMenu.append(new electron.remote.MenuItem({
                     label: "退出",
@@ -50,7 +57,13 @@ const MainView = Vue.component("main-view", {
         },
 
         menuClicked(e) {
-            this.getOptionsMenu().popup({ x: 335, y: 50 });
+            this.getOptionsMenu().popup({x: 335, y: 50});
+        },
+
+        playFirst() {
+            let file = this.playlist[0];
+            this.$refs.player.src = file;
+            this.output_text = path.basename(file);
         }
     }
 });

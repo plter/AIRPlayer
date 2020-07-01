@@ -17,6 +17,8 @@
     justify-content: center;
     box-sizing: border-box;
     padding: 10px;
+    overflow: hidden;
+    font-size: 10pt;
 }
 
 .buttons {
