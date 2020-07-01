@@ -45,3 +45,13 @@
 .main-screen:hover .buttons {
     display: flex;
 }
+
+
+.playlist-item {
+    cursor: default;
+}
+
+.playlist-item:hover {
+    color: #333;
+    background-color: #fff;
+}

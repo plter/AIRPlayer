@@ -14,17 +14,21 @@
         </div>
     </div>
 
-    <div v-if="playlist_visible" class="playlist card"
+    <div v-if="playlist_visible" class="playlist card text-white bg-dark"
          style="flex: 1;box-sizing: border-box;margin-top: 10px;overflow-y: scroll;overflow-x: hidden;display: flex;flex-direction: column;">
         <div class="card-header" style="-webkit-app-region: drag;">
-            <a href="#" class="text-danger" @click="btnHidePlaylistClicked" style="float: right;"><i
+            <a href="#" class="text-light" @click="btnHidePlaylistClicked" style="float: right;"><i
                     class="fas fa-times"></i></a>
             播放列表
         </div>
         <div style="flex: 1;overflow-x: hidden;overflow-y: scroll;font-size: 10pt;">
-            <ul class="list-group">
-                <li class="list-group-item" v-for="s in playlist">{{getFileName(s)}}</li>
-            </ul>
+            <table class="table table-bordered table-dark">
+                <tbody>
+                <tr v-for="s in playlist">
+                    <td class="playlist-item">{{getFileName(s)}}</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
