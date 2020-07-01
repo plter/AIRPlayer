@@ -8,7 +8,8 @@ const MainView = Vue.component("main-view", {
         return {
             scanning_local_media_files: false,
             output_text: "",
-            playlist: []
+            playlist: [],
+            playlist_visible: false
         };
     },
 
@@ -22,6 +23,22 @@ const MainView = Vue.component("main-view", {
             this.playlist.push(filepath);
         },
 
+        showPlaylist() {
+            let win = electron.remote.getCurrentWindow();
+            this.playlist_visible = true;
+            win.setBounds({height: 600});
+        },
+
+        getFileName(filepath) {
+            return path.basename(filepath);
+        },
+
+        btnHidePlaylistClicked(e) {
+            let win = electron.remote.getCurrentWindow();
+            this.playlist_visible = false;
+            win.setBounds({height: 48});
+        },
+
         getOptionsMenu() {
             let self = this;
             if (!this._optionsMenu) {
@@ -32,7 +49,7 @@ const MainView = Vue.component("main-view", {
                     label: "播放列表",
                     icon: path.join(appPath, "lib", "icons", "playlist.png"),
                     click() {
-                        // TODO
+                        self.showPlaylist();
                     }
                 }));
                 this._optionsMenu.append(new electron.remote.MenuItem({

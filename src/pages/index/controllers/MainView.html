@@ -1,16 +1,33 @@
 <div class="app-root">
-    <div class="output-text">
-        {{output_text}}
-    </div>
-    <div class="buttons" v-if="!scanning_local_media_files">
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-sm btn-light"><i class="fas fa-step-backward"></i></button>
-            <button type="button" class="btn btn-sm btn-light"><i class="fas fa-play"></i></button>
-            <button type="button" class="btn btn-sm btn-light"><i class="fas fa-step-forward"></i></button>
+    <div class="main-screen">
+        <div class="output-text">
+            {{output_text}}
         </div>
-        <button class="btn btn-sm btn-light" style="margin-left: 0.3rem;" @click="menuClicked"><i
-                class="fas fa-bars"></i></button>
+        <div class="buttons" v-if="!scanning_local_media_files">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-sm btn-light"><i class="fas fa-step-backward"></i></button>
+                <button type="button" class="btn btn-sm btn-light"><i class="fas fa-play"></i></button>
+                <button type="button" class="btn btn-sm btn-light"><i class="fas fa-step-forward"></i></button>
+            </div>
+            <button class="btn btn-sm btn-light" style="margin-left: 0.3rem;" @click="menuClicked"><i
+                    class="fas fa-bars"></i></button>
+        </div>
     </div>
+
+    <div v-if="playlist_visible" class="playlist card"
+         style="flex: 1;box-sizing: border-box;margin-top: 10px;overflow-y: scroll;overflow-x: hidden;display: flex;flex-direction: column;">
+        <div class="card-header" style="-webkit-app-region: drag;">
+            <a href="#" class="text-danger" @click="btnHidePlaylistClicked" style="float: right;"><i
+                    class="fas fa-times"></i></a>
+            播放列表
+        </div>
+        <div style="flex: 1;overflow-x: hidden;overflow-y: scroll;font-size: 10pt;">
+            <ul class="list-group">
+                <li class="list-group-item" v-for="s in playlist">{{getFileName(s)}}</li>
+            </ul>
+        </div>
+    </div>
+
 
     <audio autoplay ref="player" style="display: none;"></audio>
 </div>

@@ -2,8 +2,18 @@
     width: 100%;
     height: 100%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-screen {
+    width: 100%;
+    height: 46px;
+    position: relative;
     background-color: rgba(0, 0, 0, 0.8);
+    color: white;
     border-radius: 10px;
+    -webkit-app-region: drag;
 }
 
 .output-text {
@@ -32,6 +42,6 @@
     box-sizing: border-box;
 }
 
-body:hover .buttons {
+.main-screen:hover .buttons {
     display: flex;
 }
