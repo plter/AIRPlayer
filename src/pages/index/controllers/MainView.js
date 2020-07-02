@@ -8,8 +8,10 @@ const MainView = Vue.component("main-view", {
         return {
             scanning_local_media_files: false,
             output_text: "",
+            currentPlayIndex: 0,
             playlist: [],
-            playlist_visible: false
+            playlist_visible: false,
+            playing: true
         };
     },
 
@@ -77,10 +79,80 @@ const MainView = Vue.component("main-view", {
             this.getOptionsMenu().popup({x: 335, y: 50});
         },
 
-        playFirst() {
-            let file = this.playlist[0];
+        btnShowInExplorerClicked(e) {
+            let file = $(e.target).parents(".playlist-item").data("media_file");
+            if (file) {
+                electron.shell.showItemInFolder(file);
+            }
+        },
+
+        btnPlayMediaClicked(e) {
+            let index = parseInt($(e.target).parents(".playlist-item").data("media_index"));
+            if (!isNaN(index)) {
+                this.playAtIndex(index);
+            }
+        },
+
+
+        playAtIndex(index) {
+            if (this.playlist.length && index < this.playlist.length) {
+                let file = this.playlist[index];
+                this.playFile(file);
+                this.currentPlayIndex = index;
+            }
+        },
+
+        playPre() {
+            let pre = this.currentPlayIndex - 1;
+            if (pre < 0) {
+                pre = this.playlist.length - 1;
+            }
+            this.playAtIndex(pre);
+        },
+
+        playNext() {
+            let next = this.currentPlayIndex + 1;
+            if (next > this.playlist.length - 1) {
+                next = 0;
+            }
+            this.playAtIndex(next);
+        },
+
+        btnPlayPreClicked(e) {
+            this.playPre();
+        },
+
+        btnPlayNextClicked(e) {
+            this.playNext();
+        },
+
+        btnPlayOrStopClicked(e) {
+            if (this.playing) {
+                this.$refs.player.pause();
+                this.playing = false;
+            } else {
+                this.$refs.player.play();
+                this.playing = true;
+            }
+        },
+
+        mediaEndedHandler(e) {
+            // TODO 根据用户选择的循环类型进行播放
+            this.playNext();
+        },
+
+        /**
+         *
+         * @param file {String}
+         */
+        playFile(file) {
             this.$refs.player.src = file;
             this.output_text = path.basename(file);
+            this.playing = true;
+        },
+
+        playFirst() {
+            this.playAtIndex(0);
         }
     }
 });

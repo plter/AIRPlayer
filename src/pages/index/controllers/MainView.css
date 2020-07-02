@@ -49,9 +49,24 @@
 
 .playlist-item {
     cursor: default;
+    position: relative;
 }
 
 .playlist-item:hover {
     color: #333;
     background-color: #fff;
+}
+
+.options_buttons {
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+    height: 100%;
+    display: none;
+    flex-direction: row;
+    align-items: center;
+}
+
+.playlist-item:hover .options_buttons {
+    display: flex;
 }
