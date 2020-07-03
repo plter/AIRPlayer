@@ -4,18 +4,22 @@
             {{output_text}}
         </div>
         <div class="buttons" v-if="!scanning_local_media_files">
-            <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-sm btn-light" @click="btnSwitchPlayModeClicked">
+                <i v-if="playMode=='repeat'" class="mdi mdi-repeat"></i>
+                <i v-if="playMode=='repeatOne'" class="mdi mdi-repeat-once"></i>
+            </button>
+            <div class="btn-group" role="group" aria-label="Basic example" style="margin-left: 0.3rem;">
                 <button type="button" class="btn btn-sm btn-light" @click="btnPlayPreClicked"><i
-                        class="fas fa-step-backward"></i></button>
+                        class="mdi mdi-skip-previous"></i></button>
                 <button type="button" class="btn btn-sm btn-light" @click="btnPlayOrStopClicked">
-                    <i v-if="playing" class="fas fa-pause"></i>
-                    <i v-else class="fas fa-play"></i>
+                    <i v-if="playing" class="mdi mdi-pause"></i>
+                    <i v-else class="mdi mdi-play"></i>
                 </button>
                 <button type="button" class="btn btn-sm btn-light" @click="btnPlayNextClicked"><i
-                        class="fas fa-step-forward"></i></button>
+                        class="mdi mdi-skip-next"></i></button>
             </div>
             <button class="btn btn-sm btn-light" style="margin-left: 0.3rem;" @click="menuClicked"><i
-                    class="fas fa-bars"></i></button>
+                    class="mdi mdi-menu"></i></button>
         </div>
     </div>
 

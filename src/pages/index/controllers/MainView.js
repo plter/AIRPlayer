@@ -11,7 +11,8 @@ const MainView = Vue.component("main-view", {
             currentPlayIndex: 0,
             playlist: [],
             playlist_visible: false,
-            playing: true
+            playing: true,
+            playMode: "repeat" || "repeatOne" || "random"
         };
     },
 
@@ -153,9 +154,27 @@ const MainView = Vue.component("main-view", {
             }
         },
 
+
+        btnSwitchPlayModeClicked(e) {
+            switch (this.playMode) {
+                case "repeat":
+                    this.playMode = "repeatOne";
+                    break;
+                case "repeatOne":
+                    this.playMode = "repeat";
+                    break;
+            }
+        },
+
         mediaEndedHandler(e) {
-            // TODO 根据用户选择的循环类型进行播放
-            this.playNext();
+            switch (this.playMode) {
+                case "repeat":
+                    this.playNext();
+                    break;
+                case "repeatOne":
+                    this.$refs.player.play();
+                    break;
+            }
         },
 
         /**

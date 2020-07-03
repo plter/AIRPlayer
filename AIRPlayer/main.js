@@ -11,7 +11,7 @@ function createWindow() {
         width: 380,
         height: 46,
         y: workArea.y + 80,
-        x: workArea.width + workArea.x - 400,
+        x: workArea.width + workArea.x - 450,
         alwaysOnTop: true,
         maximizable: false,
         resizable: false,
