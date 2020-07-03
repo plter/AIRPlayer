@@ -1,5 +1,5 @@
 <div class="app-root">
-    <div class="main-screen">
+    <div class="main-screen bg-dark">
         <div class="output-text">
             {{output_text}}
         </div>
@@ -19,22 +19,22 @@
         </div>
     </div>
 
-    <div v-if="playlist_visible" class="playlist card text-white bg-dark"
-         style="flex: 1;box-sizing: border-box;margin-top: 10px;overflow-y: scroll;overflow-x: hidden;display: flex;flex-direction: column;">
+    <div v-if="playlist_visible" class="playlist card text-white bg-dark">
         <div class="card-header" style="-webkit-app-region: drag;">
             <a href="#" class="text-light" @click="btnHidePlaylistClicked" style="float: right;"><i
                     class="fas fa-times"></i></a>
             播放列表
         </div>
         <div style="flex: 1;overflow-x: hidden;overflow-y: scroll;font-size: 10pt;">
-            <table class="table table-bordered table-dark">
+            <table class="table table-bordered table-dark table-hover">
                 <tbody>
                 <tr v-for="(s,index) in playlist">
-                    <td class="playlist-item" :data-media_file="s" :data-media_index="index">
+                    <td class="playlist-item" @dblclick="playlist_item_dbclicked" :data-media_file="s"
+                        :data-media_index="index">
                         <div class="options_buttons btn-group" role="group">
-                            <button class="btn btn-sm btn-outline-dark" @click="btnPlayMediaClicked"><i
+                            <button class="btn btn-sm btn-outline-light" @click="btnPlayMediaClicked"><i
                                     class="fas fa-play"></i></button>
-                            <button class="btn btn-sm btn-outline-dark" @click="btnShowInExplorerClicked"><i
+                            <button class="btn btn-sm btn-outline-light" @click="btnShowInExplorerClicked"><i
                                     class="fas fa-folder-open"></i></button>
                         </div>
                         {{getFileName(s)}}

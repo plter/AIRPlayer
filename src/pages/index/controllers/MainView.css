@@ -10,9 +10,10 @@
     width: 100%;
     height: 46px;
     position: relative;
-    background-color: rgba(0, 0, 0, 0.8);
     color: white;
     border-radius: 10px;
+    opacity: 0.8;
+    user-select: none;
     -webkit-app-region: drag;
 }
 
@@ -46,15 +47,22 @@
     display: flex;
 }
 
+.playlist {
+    opacity: 0.8;
+    flex: 1;
+    box-sizing: border-box;
+    margin-top: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
 
 .playlist-item {
     cursor: default;
     position: relative;
-}
-
-.playlist-item:hover {
-    color: #333;
-    background-color: #fff;
+    user-select: none;
 }
 
 .options_buttons {

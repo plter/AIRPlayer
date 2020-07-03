@@ -84,12 +84,21 @@ const MainView = Vue.component("main-view", {
             if (file) {
                 electron.shell.showItemInFolder(file);
             }
+            e.stopPropagation();
         },
 
         btnPlayMediaClicked(e) {
-            let index = parseInt($(e.target).parents(".playlist-item").data("media_index"));
-            if (!isNaN(index)) {
-                this.playAtIndex(index);
+            let file = $(e.target).parents(".playlist-item").data("media_file");
+            if (file) {
+                this.playFile(file);
+            }
+            e.stopPropagation();
+        },
+
+        playlist_item_dbclicked(e) {
+            let file = $(e.target).data("media_file");
+            if (file) {
+                this.playFile(file);
             }
         },
 
@@ -149,6 +158,10 @@ const MainView = Vue.component("main-view", {
             this.$refs.player.src = file;
             this.output_text = path.basename(file);
             this.playing = true;
+            this.currentPlayIndex = this.playlist.indexOf(file);
+            if (this.currentPlayIndex <= -1) {
+                this.currentPlayIndex = 0;
+            }
         },
 
         playFirst() {
