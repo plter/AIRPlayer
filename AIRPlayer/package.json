@@ -3,8 +3,18 @@
   "version": "1.0.0",
   "description": "AIRPLayer",
   "main": "main.js",
+  "build": {
+    "appId": "top.yunp.airplayer",
+    "productName": "AIRPlayer",
+    "icon": "lib/icons/app_icon.png",
+    "mac": {
+      "category": "top.yunp.airplayer"
+    }
+  },
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build_installer": "electron-builder",
+    "build_mac_installer": "electron-builder -m"
   },
   "repository": "https://github.com/plter/AIRPlayer/",
   "keywords": [
@@ -13,7 +23,8 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^9.0.5"
+    "electron": "^9.0.5",
+    "electron-builder": "^22.7.0"
   },
   "dependencies": {
     "@mdi/font": "^5.3.45",
