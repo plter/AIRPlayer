@@ -5,13 +5,23 @@ import MediaDirectoriesProxy from "./MediaDirectoriesProxy";
 export default class PlaylistProxy extends Proxy {
 
 
+    constructor() {
+        super(PlaylistProxy.name, {});
+    }
+
     async onRegister() {
         this.sendNotification(Constants.NOTIFICATIONS.UPDATE_OUTPUT_TEXT, "正在扫描...");
 
         let dirs = this.facade.retrieveProxy(MediaDirectoriesProxy.name).getMediaDirectories();
         await this.scanMediaDirectories(dirs);
         this.sendNotification(Constants.NOTIFICATIONS.UPDATE_OUTPUT_TEXT, "扫描完成");
-        this.sendNotification(Constants.NOTIFICATIONS.PLAY_FIRST);
+
+        let currentPlayingFile = this.getCurrentPlayingFile();
+        if (currentPlayingFile) {
+            this.sendNotification(Constants.NOTIFICATIONS.PLAY_MEDIA_FILE, currentPlayingFile);
+        } else {
+            this.sendNotification(Constants.NOTIFICATIONS.PLAY_FIRST);
+        }
     }
 
     async scanDir(dirPath, loopDepth) {
@@ -44,5 +54,13 @@ export default class PlaylistProxy extends Proxy {
         for (let d of dirs) {
             await this.scanDir(d, 1);
         }
+    }
+
+    markCurrentPlayingFile(file) {
+        localStorage.setItem("currentPlayingFile", file);
+    }
+
+    getCurrentPlayingFile() {
+        return localStorage.getItem("currentPlayingFile");
     }
 }

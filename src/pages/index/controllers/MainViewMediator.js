@@ -1,10 +1,12 @@
 import Mediator from "../../../lib/puremvc/Mediator"
 import MainView from "./MainView";
 import Constants from "../Constants";
+import PlaylistProxy from "../proxies/PlaylistProxy";
 
 class MainViewMediator extends Mediator {
     constructor() {
         super(MainViewMediator.name, new MainView());
+        this.viewComponent.setMediator(this);
 
         let app = document.createElement("div");
         document.body.append(app);
@@ -15,7 +17,8 @@ class MainViewMediator extends Mediator {
         return [
             Constants.NOTIFICATIONS.UPDATE_OUTPUT_TEXT,
             Constants.NOTIFICATIONS.UPDATE_PLAYLIST,
-            Constants.NOTIFICATIONS.PLAY_FIRST
+            Constants.NOTIFICATIONS.PLAY_FIRST,
+            Constants.NOTIFICATIONS.PLAY_MEDIA_FILE
         ];
     }
 
@@ -34,7 +37,18 @@ class MainViewMediator extends Mediator {
             case Constants.NOTIFICATIONS.PLAY_FIRST:
                 this.viewComponent.playFirst();
                 break;
+            case Constants.NOTIFICATIONS.PLAY_MEDIA_FILE:
+                this.viewComponent.playFile(notification.body);
+                break;
         }
+    }
+
+    markCurrentPlayingFile(file) {
+        /**
+         * @type {PlaylistProxy}
+         */
+        let playlistProxy = this.facade.retrieveProxy(PlaylistProxy.name);
+        playlistProxy.markCurrentPlayingFile(file);
     }
 
 }

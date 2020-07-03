@@ -21,6 +21,14 @@ const MainView = Vue.component("main-view", {
 
     methods: {
 
+        setMediator(m) {
+            this._mediator = m;
+        },
+
+        getMediator() {
+            return this._mediator;
+        },
+
         addMediaFileToPlaylist(filepath) {
             this.playlist.push(filepath);
         },
@@ -158,6 +166,7 @@ const MainView = Vue.component("main-view", {
             this.$refs.player.src = file;
             this.output_text = path.basename(file);
             this.playing = true;
+            this.getMediator().markCurrentPlayingFile(file);
             this.currentPlayIndex = this.playlist.indexOf(file);
             if (this.currentPlayIndex <= -1) {
                 this.currentPlayIndex = 0;

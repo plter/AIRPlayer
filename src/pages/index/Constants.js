@@ -3,7 +3,8 @@ const Constants = {
         START_UP: "startUp",
         UPDATE_OUTPUT_TEXT: "updateOutputText",
         UPDATE_PLAYLIST: "updatePlaylist",
-        PLAY_FIRST: "playFirst"
+        PLAY_FIRST: "playFirst",
+        PLAY_MEDIA_FILE: "playMediaFile"
     },
 
     UpdatePlaylistType: {
